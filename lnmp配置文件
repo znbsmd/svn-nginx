@@ -1,0 +1,42 @@
+server {
+        listen       81 default_server;
+        root /home/www/goldcms;
+        server_name 192.168.200.57;
+        index  index.php index.html;
+
+        location ~ /\.ht {
+                deny  all;
+        }
+
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|ico)$
+        {
+              expires 7d;
+              access_log off;
+        }
+
+        location ~ .*\.(js|css)$
+        {
+              expires 12h;
+              access_log off;
+        }
+       
+        location / {
+            if (!-e $request_filename) {
+                rewrite ^/(.*)$ /index.php?s=$1 last;
+            }
+
+           location ~ \.php$ {
+               fastcgi_pass unix:/dev/shm/php-fcgi7.sock;
+               fastcgi_index index.php;
+               include fastcgi.conf;
+            }
+
+        }
+
+
+        location ~ \.php$ {
+            fastcgi_pass unix:/dev/shm/php-fcgi7.sock;
+            fastcgi_index index.php;
+            include fastcgi.conf;
+         }
+}
