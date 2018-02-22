@@ -1,0 +1,59 @@
+<VirtualHost _default_:80>
+ServerName web.tfhulian.com
+DocumentRoot "D:\develop\yidong\console.tfhulian.com\web"
+  <Directory "D:\develop\yidong\console.tfhulian.com\web">
+    Options -Indexes +FollowSymLinks +ExecCGI
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+    Require all granted
+    # 开启 mod_rewrite 用于美化 URL 功能的支持（译注：对应 pretty URL 选项）
+    RewriteEngine on
+    # 如果请求的是真实存在的文件或目录，直接访问
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # 如果请求的不是真实文件或目录，分发请求至 index.php
+    RewriteRule . index.php
+
+
+  </Directory>
+</VirtualHost>
+<VirtualHost _default_:80>
+ServerName files.tfhulian.com
+DocumentRoot "D:\develop\yidong\file.tfhulian.com\web"
+  <Directory "D:\develop\yidong\file.tfhulian.com\web">
+    Options -Indexes +FollowSymLinks +ExecCGI
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+    Require all granted
+    # 开启 mod_rewrite 用于美化 URL 功能的支持（译注：对应 pretty URL 选项）
+    RewriteEngine on
+    # 如果请求的是真实存在的文件或目录，直接访问
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # 如果请求的不是真实文件或目录，分发请求至 index.php
+    RewriteRule . index.php
+  </Directory>
+</VirtualHost>
+<VirtualHost _default_:80>
+ServerName api2.tfhulian.com
+DocumentRoot "D:\develop\yidong\api2.tfhulian.com\web"
+#SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+  <Directory "D:\develop\yidong\api2.tfhulian.com\web">
+    Options -Indexes +FollowSymLinks +ExecCGI
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+    Require all granted
+    # 开启 mod_rewrite 用于美化 URL 功能的支持（译注：对应 pretty URL 选项）
+    RewriteEngine on
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+    # 如果请求的是真实存在的文件或目录，直接访问
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # 如果请求的不是真实文件或目录，分发请求至 index.php
+    RewriteRule . index.php
+  </Directory>
+</VirtualHost>
