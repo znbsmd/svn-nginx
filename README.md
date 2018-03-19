@@ -1,4 +1,6 @@
-# svn-nginx  
-Linux 下svn和nginx的配置文件
+# Linux 下 nginx  配置
+ nginx.conf nginx多域名配置
 # apache-vhosts
-Apache多个虚拟域名配置
+Apache多个虚拟域名配置 apache-vhosts
+# Linux 下svn自动更新  
+svn自动更新
